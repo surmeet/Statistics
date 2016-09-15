@@ -18,6 +18,8 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
+
 import org.json.JSONArray;
 import org.json.JSONObject;
 import java.io.BufferedReader;
@@ -65,7 +67,10 @@ public class MainActivity extends AppCompatActivity //implements AdapterView.OnI
         try
         {
             xlist = syncTask.get();
-            Log.i("xlist",xlist.toString());
+            //if(xlist!=null)
+                Log.i("xlist",xlist.toString());
+            //else
+              //  Toast.makeText(this,"Error,xlist is empty",Toast.LENGTH_LONG);
         }
         catch (InterruptedException e)
         {
@@ -135,10 +140,14 @@ public class MainActivity extends AppCompatActivity //implements AdapterView.OnI
                 fragmentClass = PieFragment.class;
                 textView.setText("Pie Chart");
                 break;
-    /*      case R.id.nav_third_fragment:
-                fragmentClass = ThirdFragment.class;
-                textView.setText("Bar Chart");
-                break;     */
+            case R.id.nav_third_fragment:
+                fragmentClass = LineFragment.class;
+                textView.setText("Line Chart");
+                break;
+            case R.id.nav_fourth_fragment:
+                fragmentClass = ScatterFragment.class;
+                textView.setText("Scatter Chart");
+                break;
             default:
                 fragmentClass = BarFragment.class;
         }

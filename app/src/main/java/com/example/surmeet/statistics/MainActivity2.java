@@ -68,6 +68,8 @@ public class MainActivity2 extends AppCompatActivity
 
         firebaseAuth=FirebaseAuth.getInstance();
 
+        Log.i("ACTIVITY 2","CREATED");
+
         Snackbar.make(view,"Logged in as:"+firebaseAuth.getCurrentUser().getEmail().toString(),Snackbar.LENGTH_SHORT).show();
 
         if(firebaseAuth.getCurrentUser()==null)
@@ -95,7 +97,7 @@ public class MainActivity2 extends AppCompatActivity
                         Toast.makeText(MainActivity2.this,"Logging out",Toast.LENGTH_SHORT).show();
                         FirebaseAuth.getInstance().signOut();
                         Log.i("LOG OUT","log out on logout");
-                        startActivity(new Intent(getBaseContext(),MainActivity.class));
+                        startActivity(new Intent(getBaseContext(),MainActivity3.class));
                     }
                 });
                 builder.setNegativeButton("Hell no!!!", new DialogInterface.OnClickListener()
@@ -236,8 +238,37 @@ public class MainActivity2 extends AppCompatActivity
     public void onBackPressed() {
         super.onBackPressed();
         Toast.makeText(this,"Logging out",Toast.LENGTH_SHORT).show();
+        user.setText("");
+        Snackbar.make(view,"Logged out",Snackbar.LENGTH_SHORT).show();
         FirebaseAuth.getInstance().signOut();
         Log.i("LOG OUT","log out on back press");
         //finish();
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        Log.i("ACTIVITY 2","DESTROYED");
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        Log.i("ACTIVITY 2","PAUSED");
+    }
+
+    @Override
+    protected void onRestart() {
+        super.onRestart();
+        Log.i("ACTIVITY 2","RESTARTED");
+        Log.i("ACTIVITY 2",firebaseAuth.getCurrentUser().getEmail().toString());
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        Log.i("ACTIVITY 2","RESUMED");
+        Log.i("ACTIVITY 2",firebaseAuth.getCurrentUser().getEmail().toString());
+
     }
 }

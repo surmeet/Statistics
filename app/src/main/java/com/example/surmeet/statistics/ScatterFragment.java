@@ -9,17 +9,26 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.github.mikephil.charting.charts.BarChart;
+import com.github.mikephil.charting.charts.ScatterChart;
 import com.github.mikephil.charting.components.YAxis;
-import com.github.mikephil.charting.data.BarData;
-import com.github.mikephil.charting.data.BarDataSet;
 import com.github.mikephil.charting.data.BarEntry;
+import com.github.mikephil.charting.data.Entry;
+import com.github.mikephil.charting.data.ScatterData;
+import com.github.mikephil.charting.data.ScatterDataSet;
 import com.github.mikephil.charting.utils.ColorTemplate;
 
 import java.util.ArrayList;
 
-public class BarFragment extends Fragment
-{
+
+/**
+ * A simple {@link Fragment} subclass.
+ * Activities that contain this fragment must implement the
+ * {@link ScatterFragment.OnFragmentInteractionListener} interface
+ * to handle interaction events.
+ * Use the {@link ScatterFragment#newInstance} factory method to
+ * create an instance of this fragment.
+ */
+public class ScatterFragment extends Fragment {
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
@@ -30,11 +39,12 @@ public class BarFragment extends Fragment
     private String mParam2;
 
     private OnFragmentInteractionListener mListener;
-    BarChart barChart;
+    ScatterChart scatterChart;
     ArrayList<String> s=new ArrayList<>();
     int c=0;
-    public BarFragment()
-    {
+
+    public ScatterFragment() {
+        // Required empty public constructor
     }
 
     /**
@@ -43,12 +53,11 @@ public class BarFragment extends Fragment
      *
      * @param param1 Parameter 1.
      * @param param2 Parameter 2.
-     * @return A new instance of fragment BarFragment.
+     * @return A new instance of fragment ScatterFragment.
      */
     // TODO: Rename and change types and number of parameters
-    public static BarFragment newInstance(String param1, String param2)
-    {
-        BarFragment fragment = new BarFragment();
+    public static ScatterFragment newInstance(String param1, String param2) {
+        ScatterFragment fragment = new ScatterFragment();
         Bundle args = new Bundle();
         args.putString(ARG_PARAM1, param1);
         args.putString(ARG_PARAM2, param2);
@@ -56,41 +65,30 @@ public class BarFragment extends Fragment
         return fragment;
     }
 
-
-  /*  @Override
-    public void onActivityCreated(Bundle savedInstanceState) {
-        super.onActivityCreated(savedInstanceState);
-
-    }
- */
-
     @Override
-    public void onCreate(Bundle savedInstanceState)
-    {
+    public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
             mParam1 = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
-
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState)
-    {
+                             Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_bar, container, false);
-        barChart=(BarChart)view.findViewById(R.id.bargraph);
+        scatterChart=(ScatterChart)view.findViewById(R.id.scattergraph);
 
         Bundle bundle = getArguments();
 
         if (bundle != null)
             s=bundle.getStringArrayList("list");
 
+        ArrayList<Entry> scatterEntries=new ArrayList<Entry>();
+        final ScatterDataSet scatterDataSet=new ScatterDataSet(scatterEntries,"Dates");
+        scatterEntries.add(new Entry(Integer.parseInt(s.get(c++)),0));
 
-        ArrayList<BarEntry> barEntries=new ArrayList<BarEntry>();
-        final BarDataSet barDataSet=new BarDataSet(barEntries,"Dates");
-        barEntries.add(new BarEntry(Integer.parseInt(s.get(c++)),0));
 
         final ArrayList<String> theDates=new ArrayList<>();
         theDates.add("Full Time Male");
@@ -98,29 +96,35 @@ public class BarFragment extends Fragment
         theDates.add("Para Contract Male");
         theDates.add("Para Contract Female");
 
-        BarData barData=new BarData(theDates,barDataSet);
-        barDataSet.setColors(ColorTemplate.COLORFUL_COLORS);
+        ScatterData scatterData=new ScatterData(theDates,scatterDataSet);
+        scatterDataSet.setColors(ColorTemplate.COLORFUL_COLORS);
+
+        Log.i("arrayList",s.toString());
+        Log.i("theDates",theDates.toString());
 
 
-        YAxis yAxis=barChart.getAxis(YAxis.AxisDependency.LEFT);
-        yAxis.setAxisMinValue(0);
+//        YAxis yAxis=scatterChart.getAxis(YAxis.AxisDependency.LEFT);
+  //      yAxis.setAxisMinValue(0);
 
-        barChart.setData(barData);
-        barChart.setEnabled(true);
-        barChart.setDragEnabled(true);
-        barChart.setScaleEnabled(true);
+        scatterChart.setData(scatterData);
+        scatterChart.setEnabled(true);
+        scatterChart.setDragEnabled(true);
+        scatterChart.setScaleEnabled(true);
 
         Log.i("BLAH","inside  on create  of fragment");
 
         try
         {
+            Log.i("BLAH","inside try catch of fragment");
+
             for(int i=0;i<3;i++)
-                barDataSet.addEntry(new BarEntry(Integer.parseInt(s.get(c++)),i+1));
+            {
+                scatterDataSet.addEntry(new Entry(Integer.parseInt(s.get(c++)),i+1));
+            }
 
-
-            barChart.notifyDataSetChanged();
-            barChart.invalidate();
-            barChart.setVisibility(View.VISIBLE);
+            scatterChart.notifyDataSetChanged();
+            scatterChart.invalidate();
+            scatterChart.setVisibility(View.VISIBLE);
         }
         catch (Exception e)
         {
@@ -130,8 +134,7 @@ public class BarFragment extends Fragment
     }
 
     // TODO: Rename method, update argument and hook method into UI event
-    public void onButtonPressed(Uri uri)
-    {
+    public void onButtonPressed(Uri uri) {
         if (mListener != null) {
             mListener.onFragmentInteraction(uri);
         }
@@ -146,8 +149,8 @@ public class BarFragment extends Fragment
             throw new RuntimeException(context.toString()
                     + " must implement OnFragmentInteractionListener");
         }
-    } */
-
+    }
+*/
     @Override
     public void onDetach() {
         super.onDetach();

@@ -4,14 +4,18 @@
             <item
                 android:id="@+id/nav_first_fragment"
                 android:icon="@mipmap/ic_one"
-                android:title="BarChart" />
+                android:title="Bar Chart" />
             <item
                 android:id="@+id/nav_second_fragment"
                 android:icon="@mipmap/ic_one"
-                android:title="PieChart" />
+                android:title="Pie Chart" />
             <item
                 android:id="@+id/nav_third_fragment"
                 android:icon="@mipmap/ic_one"
-                android:title="Third" />
+                android:title="Line Chart" />
+            <item
+                android:id="@+id/nav_fourth_fragment"
+                android:icon="@mipmap/ic_one"
+                android:title="Scatter Chart" />
         </group>
     </menu>

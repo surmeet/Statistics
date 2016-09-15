@@ -144,7 +144,8 @@ public class LoginFragment extends Fragment
                 {
                     progressDialog.dismiss();
                     Log.i("SIGN UP", "on Auth State Changed:signed_in");
-                    //Toast.makeText(getContext(), "Logged in", Toast.LENGTH_LONG).show();
+                    Snackbar.make(view,"Logged in as:"+firebaseAuth.getCurrentUser().getEmail().toString(),Snackbar.LENGTH_SHORT).show();
+                    Toast.makeText(getContext(), "Logged in", Toast.LENGTH_LONG).show();
                     Intent in = new Intent(getContext(), MainActivity2.class);
                     startActivity(in);
                 }
@@ -263,18 +264,48 @@ public class LoginFragment extends Fragment
 
 
     @Override
-    public void onStart() {
+    public void onStart()
+    {
         super.onStart();
+        Log.i("LOGIN FRAGMENT","STARTED");
         firebaseAuth.addAuthStateListener(mAuthListener);
     }
 
     @Override
     public void onStop() {
         super.onStop();
-        if (mAuthListener != null) {
+        Log.i("LOGIN FRAGMENT","STOPPED");
+        if (mAuthListener != null)
+        {
             firebaseAuth.removeAuthStateListener(mAuthListener);
         }
     }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        Log.i("LOGIN FRAGMENT","DESTROYED");
+        mGoogleApiClient.stopAutoManage(getActivity());
+        mGoogleApiClient.disconnect();
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        Log.i("LOGIN FRAGMENT","PAUSED");
+        mGoogleApiClient.stopAutoManage(getActivity());
+        mGoogleApiClient.disconnect();
+    }
+
+    @Override
+    public void onResume()
+    {
+        super.onResume();
+        Log.i("LOGIN FRAGMENT","RESUMED");
+        mGoogleApiClient.reconnect();
+
+    }
+
     //TODO: Rename method, update argument and hook method into UI event
     public void onButtonPressed(Uri uri) {
         if (mListener != null) {
