@@ -17,5 +17,9 @@
                 android:id="@+id/nav_fourth_fragment"
                 android:icon="@mipmap/ic_one"
                 android:title="Scatter Chart" />
+            <item
+                android:id="@+id/nav_five_fragment"
+                android:icon="@mipmap/ic_one"
+                android:title="Radar Chart" />
         </group>
     </menu>

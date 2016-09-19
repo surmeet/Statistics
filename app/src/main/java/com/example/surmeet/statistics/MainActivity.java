@@ -148,6 +148,10 @@ public class MainActivity extends AppCompatActivity //implements AdapterView.OnI
                 fragmentClass = ScatterFragment.class;
                 textView.setText("Scatter Chart");
                 break;
+            case R.id.nav_five_fragment:
+                fragmentClass = RadarFragment.class;
+                textView.setText("Radar Chart");
+                break;
             default:
                 fragmentClass = BarFragment.class;
         }

@@ -108,11 +108,7 @@ public class PieFragment extends Fragment {
         pieChart.setEnabled(true);
 
         for(int i=0;i<3;i++)
-        {
             pieDataSet.addEntry(new Entry(Integer.parseInt(s.get(c++)),i+1));
-            //Log.i(" pie chart",s.toString());
-        }
-
 
 
         pieData.notifyDataChanged();

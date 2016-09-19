@@ -9,12 +9,12 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.github.mikephil.charting.charts.ScatterChart;
+import com.github.mikephil.charting.charts.BarChart;
+import com.github.mikephil.charting.charts.RadarChart;
 import com.github.mikephil.charting.components.YAxis;
-import com.github.mikephil.charting.data.BarEntry;
 import com.github.mikephil.charting.data.Entry;
-import com.github.mikephil.charting.data.ScatterData;
-import com.github.mikephil.charting.data.ScatterDataSet;
+import com.github.mikephil.charting.data.RadarData;
+import com.github.mikephil.charting.data.RadarDataSet;
 import com.github.mikephil.charting.utils.ColorTemplate;
 
 import java.util.ArrayList;
@@ -23,12 +23,12 @@ import java.util.ArrayList;
 /**
  * A simple {@link Fragment} subclass.
  * Activities that contain this fragment must implement the
- * {@link ScatterFragment.OnFragmentInteractionListener} interface
+ * {@link RadarFragment.OnFragmentInteractionListener} interface
  * to handle interaction events.
- * Use the {@link ScatterFragment#newInstance} factory method to
+ * Use the {@link RadarFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class ScatterFragment extends Fragment {
+public class RadarFragment extends Fragment {
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
@@ -39,11 +39,11 @@ public class ScatterFragment extends Fragment {
     private String mParam2;
 
     private OnFragmentInteractionListener mListener;
-    ScatterChart scatterChart;
+    RadarChart radarChart;
     ArrayList<String> s=new ArrayList<>();
     int c=0;
 
-    public ScatterFragment() {
+    public RadarFragment() {
         // Required empty public constructor
     }
 
@@ -53,11 +53,11 @@ public class ScatterFragment extends Fragment {
      *
      * @param param1 Parameter 1.
      * @param param2 Parameter 2.
-     * @return A new instance of fragment ScatterFragment.
+     * @return A new instance of fragment RadarFragment.
      */
     // TODO: Rename and change types and number of parameters
-    public static ScatterFragment newInstance(String param1, String param2) {
-        ScatterFragment fragment = new ScatterFragment();
+    public static RadarFragment newInstance(String param1, String param2) {
+        RadarFragment fragment = new RadarFragment();
         Bundle args = new Bundle();
         args.putString(ARG_PARAM1, param1);
         args.putString(ARG_PARAM2, param2);
@@ -77,18 +77,20 @@ public class ScatterFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_scatter, container, false);
-        scatterChart=(ScatterChart)view.findViewById(R.id.scattergraph);
+        View view = inflater.inflate(R.layout.fragment_radar, container, false);
+        radarChart=(RadarChart)view.findViewById(R.id.radargraph);
 
         Bundle bundle = getArguments();
 
         if (bundle != null)
             s=bundle.getStringArrayList("list");
 
-        ArrayList<Entry> scatterEntries=new ArrayList<Entry>();
-        final ScatterDataSet scatterDataSet=new ScatterDataSet(scatterEntries,"Dates");
-        scatterEntries.add(new Entry(Integer.parseInt(s.get(c++)),0));
 
+
+        ArrayList<Entry> radarEntries=new ArrayList<Entry>();
+        final RadarDataSet radarDataSet=new RadarDataSet(radarEntries,"Dates");
+        radarEntries.add(new Entry(Integer.parseInt(s.get(c++)),0));
+        radarDataSet.setColors(ColorTemplate.COLORFUL_COLORS);
 
         final ArrayList<String> theDates=new ArrayList<>();
         theDates.add("Full Time Male");
@@ -97,42 +99,25 @@ public class ScatterFragment extends Fragment {
         theDates.add("Para Contract Female");
 
         Log.i("theDates",theDates.toString());
-        Log.i("scatterDataSet",scatterDataSet.getEntryForIndex(0).toString());
+        Log.i("radarDataSet",radarDataSet.getEntryForIndex(0).toString());
 
-        ScatterData scatterData=new ScatterData(theDates,scatterDataSet);
-        scatterDataSet.setColors(ColorTemplate.COLORFUL_COLORS);
+        RadarData radarData=new RadarData(theDates,radarDataSet);
 
-        Log.i("arrayList",s.toString());
-        Log.i("theDates",theDates.toString());
-        Log.i("theDates",scatterData.getDataSetByIndex(0).toString());
-
-
-//        YAxis yAxis=scatterChart.getAxis(YAxis.AxisDependency.LEFT);
-  //      yAxis.setAxisMinValue(0);
-
-        scatterChart.setData(scatterData);
-        scatterChart.setEnabled(true);
-        scatterChart.setDragEnabled(true);
-        scatterChart.setScaleEnabled(true);
-        scatterChart.setDescription("Description");
+        radarChart.setData(radarData);
+        radarChart.setEnabled(true);
+        radarChart.animate();
 
         Log.i("BLAH","inside  on create  of fragment");
 
         try
         {
-            Log.i("BLAH","inside try catch of fragment");
-
             for(int i=0;i<3;i++)
-            {
-                scatterDataSet.addEntry(new Entry(Integer.parseInt(s.get(c++)),i+1));
-            }
-
-            scatterData.notifyDataChanged(); // let the data know a dataSet changed
-            scatterChart.notifyDataSetChanged();
-            scatterChart.invalidate();
-            scatterChart.setVisibility(View.VISIBLE);
+                radarDataSet.addEntry(new Entry(Integer.parseInt(s.get(c++)),i+1));
 
 
+            radarChart.notifyDataSetChanged();
+            radarChart.invalidate();
+            radarChart.setVisibility(View.VISIBLE);
         }
         catch (Exception e)
         {
@@ -148,7 +133,7 @@ public class ScatterFragment extends Fragment {
         }
     }
 
-  /*  @Override
+ /*   @Override
     public void onAttach(Context context) {
         super.onAttach(context);
         if (context instanceof OnFragmentInteractionListener) {
@@ -157,8 +142,8 @@ public class ScatterFragment extends Fragment {
             throw new RuntimeException(context.toString()
                     + " must implement OnFragmentInteractionListener");
         }
-    }
-*/
+    }  */
+
     @Override
     public void onDetach() {
         super.onDetach();

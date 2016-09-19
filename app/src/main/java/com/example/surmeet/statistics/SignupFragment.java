@@ -154,20 +154,6 @@ public class SignupFragment extends Fragment {
                                 Log.i("sign up failed",task.getException().toString());
                                 Toast.makeText(getContext(),task.getException().toString(),Toast.LENGTH_SHORT).show();
                             }
-
-                            /*if (task.isSuccessful())
-                            {
-                                progressDialog.dismiss();
-                                Toast.makeText(getContext(), "Successfully Registered", Toast.LENGTH_LONG).show();
-                                Intent in=new Intent(getContext(), MainActivity2.class);
-                                startActivity(in);
-                            }
-                            else
-                            {
-                                progressDialog.dismiss();
-                                Toast.makeText(getContext(), task.getResult().toString(), Toast.LENGTH_LONG).show();
-                                Log.i("error",task.getResult().toString());
-                            }*/
                         }
                     });
                 }

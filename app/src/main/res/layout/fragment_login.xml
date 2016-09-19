@@ -70,7 +70,7 @@
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceMedium"
         android:text="Forgot Password? Send Reset  Mail "
-        android:id="@+id/textView7"
+        android:id="@+id/password_reset"
         android:layout_below="@+id/password"
         android:layout_centerHorizontal="true" />
 </RelativeLayout>

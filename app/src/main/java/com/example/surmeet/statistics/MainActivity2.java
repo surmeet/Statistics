@@ -89,8 +89,8 @@ public class MainActivity2 extends AppCompatActivity
             {
 
                 AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity2.this);
-                builder.setMessage("You sure,bitch?").setTitle("Gonna Log the Fuck out");
-                builder.setPositiveButton("Yes, Bitch", new DialogInterface.OnClickListener()
+                builder.setMessage("Are you Sure?").setTitle("Log Out");
+                builder.setPositiveButton("Yes", new DialogInterface.OnClickListener()
                 {
                     public void onClick(DialogInterface dialog, int id)
                     {
@@ -100,7 +100,7 @@ public class MainActivity2 extends AppCompatActivity
                         startActivity(new Intent(getBaseContext(),MainActivity3.class));
                     }
                 });
-                builder.setNegativeButton("Hell no!!!", new DialogInterface.OnClickListener()
+                builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener()
                 {
                     public void onClick(DialogInterface dialog, int id)
                     {
@@ -242,7 +242,6 @@ public class MainActivity2 extends AppCompatActivity
         Snackbar.make(view,"Logged out",Snackbar.LENGTH_SHORT).show();
         FirebaseAuth.getInstance().signOut();
         Log.i("LOG OUT","log out on back press");
-        //finish();
     }
 
     @Override

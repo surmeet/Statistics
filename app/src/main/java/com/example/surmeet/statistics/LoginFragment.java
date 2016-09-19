@@ -2,6 +2,7 @@ package com.example.surmeet.statistics;
 
 import android.app.ProgressDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
@@ -10,7 +11,9 @@ import android.support.annotation.NonNull;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
+import android.text.InputType;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -111,7 +114,7 @@ public class LoginFragment extends Fragment
         email=(EditText)view.findViewById(R.id.email);
         password=(EditText)view.findViewById(R.id.password);
         login=(Button)view.findViewById(R.id.login);
-        resetPassword=(TextView)view.findViewById(R.id.textView7);
+        resetPassword=(TextView)view.findViewById(R.id.password_reset);
         google=(Button)view.findViewById(R.id.google);
         progressDialog=new ProgressDialog(getContext());
         firebaseAuth=firebaseAuth.getInstance();
@@ -162,15 +165,35 @@ public class LoginFragment extends Fragment
             @Override
             public void onClick(View v)
             {
-                if(email.getText().toString().isEmpty())
-                    Toast.makeText(getContext(),"Enter Email Id where Reset mail is to be sent", Toast.LENGTH_SHORT).show();
 
-                firebaseAuth.sendPasswordResetEmail(email.getText().toString()).addOnCompleteListener(new OnCompleteListener<Void>() {
+                final EditText recovery_email = new EditText(getContext());
+                recovery_email.setInputType(InputType.TYPE_CLASS_TEXT);
+
+                AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(getActivity());
+                alertDialogBuilder.setTitle("Reset Password").setView(recovery_email).setPositiveButton("OK", new DialogInterface.OnClickListener()
+                {
                     @Override
-                    public void onComplete(@NonNull Task<Void> task) {
-                        Toast.makeText(getContext(), "Password Reset Email sent", Toast.LENGTH_SHORT).show();
+                    public void onClick(DialogInterface dialog, int id)
+                    {
+                        Log.i("reset","inside on click OK");
+                        firebaseAuth.sendPasswordResetEmail(recovery_email.getText().toString()).addOnCompleteListener(new OnCompleteListener<Void>()
+                        {
+                            @Override
+                            public void onComplete(@NonNull Task<Void> task)
+                            {
+                                Snackbar.make(getView(), "Password Reset Email sent", Snackbar.LENGTH_SHORT).show();
+                            }
+                        });
+                    }
+                }).setNegativeButton("Cancel", new DialogInterface.OnClickListener()
+                {
+                    public void onClick(DialogInterface dialog, int id) {
                     }
                 });
+                AlertDialog alertDialog = alertDialogBuilder.create();
+
+                // show it
+                alertDialog.show();
             }
         });
 
